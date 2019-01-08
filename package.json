@@ -48,7 +48,7 @@
     "react-app-polyfill": "^0.2.0",
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.7.0",
-    "react-redux": "^6.0.0",
+    "react-redux": "^5.1.1",
     "react-redux-toastr": "^7.4.5",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
@@ -88,8 +88,8 @@
     "coverageDirectory": "coverage",
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css|scss)$": "identity-obj-proxy",
-      "actions/(.*)$:": "<rootDir>/src/actions/$1",
-      "components/(.*)$": "<rootDir>/src/components/$1"
+      "^actions/(.*)$": "<rootDir>/src/actions/$1",
+      "^components/(.*)$": "<rootDir>/src/components/$1"
     },
     "testEnvironment": "jsdom",
     "testMatch": [

@@ -13,20 +13,6 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-const shallowWithDive = (wrapper, name) => {
-  let component = shallow(wrapper);
-
-  if (!name) {
-    return component;
-  }
-
-  while (component.name() !== name) {
-    component = component.dive();
-  }
-
-  return component.dive();
-};
-
 const mockStore = (...args) => {
   const factory = configureMockStore(createMiddlewares());
   return factory(...args);
@@ -37,6 +23,6 @@ global.createMockStore = state => ({
   dispatch: jest.fn(),
 });
 global.React = React;
-global.shallow = shallowWithDive;
+global.shallow = shallow;
 global.mount = mount;
 global.render = render;

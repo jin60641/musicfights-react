@@ -17,13 +17,16 @@ const mapDispatchToProps = {
 class App extends Component {
   static propTypes = {
     // mapStateToProps
-    user: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.node,
-    ]).isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }),
 
     // mapDispatchToProps
     loggedIn: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    user: null,
   }
 
   componentDidMount() {
