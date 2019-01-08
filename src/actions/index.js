@@ -1,5 +1,9 @@
 import { combineEpics } from 'redux-observable';
 
-const rootEpic = combineEpics();
+import socketEpic from './socket';
+
+const rootEpic = combineEpics(
+  socketEpic,
+);
 
 export default rootEpic;

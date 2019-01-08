@@ -1,3 +1,9 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import user from './user';
+import socket from './socket';
+
+export default combineReducers({
+  user,
+  socket,
+});

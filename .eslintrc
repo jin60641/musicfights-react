@@ -13,6 +13,7 @@
     "createMockStore": true,
   },
   "rules": {
+    "no-shadow": 0,
     "jsx-quotes": [2, "prefer-single"],
     "object-shorthand": [2, "always"],
     "arrow-body-style": ["error", "as-needed"],
