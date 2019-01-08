@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended",
+    "jest-enzyme"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "createMockStore": true,
+  },
+  "rules": {
+    "jsx-quotes": [2, "prefer-single"],
+    "object-shorthand": [2, "always"],
+    "arrow-body-style": ["error", "as-needed"],
+
+    "import/no-unresolved": [
+      0,
+      { "ignore": ["^components", "^actions"] }
+    ],
+
+    "react/jsx-filename-extension": [2, { "extensions": [".test.js", ".jsx"] }]
+  }
+}
