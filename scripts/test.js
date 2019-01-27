@@ -41,6 +41,7 @@ function isInMercurialRepository() {
 // Watch unless on CI, in coverage mode, or explicitly running all tests
 if (
   !process.env.CI &&
+  !process.env.GIT_HOOK &&
   argv.indexOf('--coverage') === -1 &&
   argv.indexOf('--watchAll') === -1
 ) {

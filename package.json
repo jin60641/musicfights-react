@@ -70,8 +70,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "jest --no-cache",
-    "test:watch": "npm run test -- --watch",
+    "test": "node scripts/test.js",
     "lint": "eslint -c .eslintrc 'src/**/*.js*'",
     "lint:diff": "git diff-index --name-only --diff-filter=dbx HEAD | grep -E \"^src/(.*)\\.(jsx|js)$\" | xargs eslint"
   },
@@ -121,7 +120,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run test",
+      "pre-push": "GIT_HOOK=true npm run test",
       "pre-commit": "npm run lint:diff"
     }
   },
