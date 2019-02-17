@@ -24,7 +24,7 @@ const loginEpic = action$ => action$.pipe(
     connectSocket.REQUEST(),
     successToastr(body.message),
   ] : [
-    login.FAILURE(new Error(body.message)),
+    login.FAILURE(body.message),
     warningToastr(body.message),
   ])),
 );
@@ -36,7 +36,7 @@ const logoutEpic = action$ => action$.pipe(
     logout.SUCCESS(body.data),
     successToastr(body.message),
   ] : [
-    logout.FAILURE(new Error(body.message)),
+    logout.FAILURE(body.message),
     warningToastr(body.message),
   ])),
 );
@@ -48,7 +48,7 @@ const loggedInEpic = action$ => action$.pipe(
     loggedIn.SUCCESS(body.data),
     connectSocket.REQUEST(),
   ] : [
-    loggedIn.FAILURE(new Error(body.message)),
+    loggedIn.FAILURE(body.message),
   ])),
 );
 
@@ -59,7 +59,7 @@ const joinEpic = action$ => action$.pipe(
     join.SUCCESS(body.data),
     successToastr(body.message),
   ] : [
-    join.FAILURE(new Error(body.message)),
+    join.FAILURE(body.message),
     warningToastr(body.message),
   ])),
 );
@@ -69,7 +69,7 @@ const verifyMailEpic = action$ => action$.pipe(
   mergeMap(action => from(api.verifyMail(action.payload))),
   map(body => (body.data
     ? verifyMail.SUCCESS(body.data)
-    : verifyMail.FAILURE(new Error(body.message)))),
+    : verifyMail.FAILURE(body.message))),
 );
 
 const findPwEpic = action$ => action$.pipe(
@@ -79,7 +79,7 @@ const findPwEpic = action$ => action$.pipe(
     findPw.SUCCESS(body.data),
     successToastr(body.message),
   ] : [
-    findPw.FAILURE(new Error(body.message)),
+    findPw.FAILURE(body.message),
     warningToastr(body.message),
   ])),
 );
@@ -91,7 +91,7 @@ const changePwEpic = action$ => action$.pipe(
     changePw.SUCCESS(body.data),
     successToastr(body.message),
   ] : [
-    changePw.FAILURE(new Error(body.message)),
+    changePw.FAILURE(body.message),
     warningToastr(body.message),
   ])),
 );

@@ -18,7 +18,7 @@ class App extends Component {
   static propTypes = {
     // mapStateToProps
     user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.number,
     }),
 
     // mapDispatchToProps
@@ -41,10 +41,10 @@ class App extends Component {
     }
     return (
       <Router>
-        <div>
+        <>
           <Toastr />
           Hello, World
-        </div>
+        </>
       </Router>
     );
   }

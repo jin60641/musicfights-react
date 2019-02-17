@@ -14,6 +14,8 @@ const Fetch = (method, uri, data) => {
       options.body = data;
     }
   }
-  return fetch(uri, options).then(resp => resp.json());
+  return fetch(uri, options)
+    .then(resp => resp.json())
+    .catch(({ message }) => ({ message }));
 };
 export default Fetch;
