@@ -20,7 +20,7 @@
 
     "import/no-unresolved": [
       0,
-      { "ignore": ["^components", "^actions"] }
+      { "ignore": ["^components", "^containers", "^actions"] }
     ],
 
     "react/jsx-filename-extension": [2, { "extensions": [".test.js", ".jsx"] }]

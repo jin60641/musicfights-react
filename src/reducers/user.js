@@ -1,7 +1,9 @@
 import { handleActions } from 'redux-actions';
 import {
-  login, logout, loggedIn,
-} from '../actions/auth';
+  login,
+  logout,
+  loggedIn,
+} from 'actions/auth';
 
 const initialState = null;
 

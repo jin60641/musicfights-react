@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import Toastr from 'components/Toastr/Toastr';
-
 import { loggedIn } from 'actions/auth';
+
+import Toastr from 'components/Toastr';
+import Upload from './containers/Upload';
+
 
 const mapStateToProps = ({ user }) => ({ user });
 
@@ -43,7 +44,7 @@ class App extends Component {
       <Router>
         <>
           <Toastr />
-          Hello, World
+          <Upload />
         </>
       </Router>
     );
