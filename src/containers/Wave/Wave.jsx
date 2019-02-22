@@ -8,7 +8,6 @@ const FPS = 30;
 const BAR_WIDTH = 8;
 const BAR_MARGIN = 2;
 const BAR_SPACE = BAR_WIDTH + BAR_MARGIN;
-const BAR_HEIGHT = 7 / 10;
 const SECOND_WIDTH = 2;
 const SECOND_HEIGHT = 5;
 
@@ -18,6 +17,7 @@ const INITIAL_STATE = {
   height: 0,
   cursor: 0,
   sinIndex: 0,
+  barCount: 3,
   mouseX: null,
 };
 
@@ -105,14 +105,17 @@ class Wave extends Component {
       height,
       sinIndex,
       cursor,
+      barCount,
     } = this.state;
     ctx.clearRect(0, 0, width, height);
     if (music.length) {
-      const maxHeight = BAR_HEIGHT * height;
+      const maxHeight = height - 50;
       const audioCurrentTime = 0;
       music.forEach((bar, idx) => {
         const x = idx * BAR_SPACE;
-        if (x >= -cursor + width / 2 && x <= -cursor + width / 2 + BAR_WIDTH + BAR_MARGIN / 2) {
+        const gap = BAR_SPACE / 2 * barCount;
+        const center = -cursor + width / 2;
+        if (x >= center - gap && x < center + gap) {
           if (x / (music.length * BAR_SPACE) < audioCurrentTime / music.length) {
             ctx.fillStyle = '#ff5c26';
           } else {
