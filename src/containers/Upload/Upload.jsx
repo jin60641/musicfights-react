@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { bindActions } from 'actions/HelperFuncs';
 import { postMusic, postMusicByYoutube } from 'actions/music';
 
 import Wave from '../Wave';
+import Play from '../Play';
 
-const mapDispatchToProps = {
-  postMusic: postMusic.REQUEST,
-  postMusicByYoutube: postMusicByYoutube.REQUEST,
-};
+const mapDispatchToProps = bindActions({
+  postMusic,
+  postMusicByYoutube,
+});
 
 @connect(null, mapDispatchToProps)
 class Upload extends Component {
@@ -31,7 +33,10 @@ class Upload extends Component {
   handleKeyDownText = ({ key, target: { value } }) => {
     const { postMusicByYoutube } = this.props;
     if (key === 'Enter') {
-      postMusicByYoutube({ url: value });
+      const match = value.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/);
+      if (match && match[1].length === 11) {
+        postMusicByYoutube({ vid: match[1] });
+      }
     }
   }
 
@@ -47,6 +52,7 @@ class Upload extends Component {
           onKeyDown={this.handleKeyDownText}
         />
         <Wave />
+        <Play />
       </div>
     );
   }

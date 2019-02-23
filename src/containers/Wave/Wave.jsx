@@ -2,6 +2,9 @@ import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { bindActions } from 'actions/HelperFuncs';
+import { setMusicStart } from 'actions/music';
+
 import './Wave.scss';
 
 const FPS = 30;
@@ -17,17 +20,35 @@ const INITIAL_STATE = {
   height: 0,
   cursor: 0,
   sinIndex: 0,
-  barCount: 3,
   mouseX: null,
 };
 
-const mapStateToProps = ({ music }) => ({ music });
+const mapStateToProps = ({
+  music: {
+    bars,
+    start,
+    duration,
+  },
+}) => ({
+  bars,
+  start,
+  duration,
+});
 
-@connect(mapStateToProps)
+const mapDispatchToProps = bindActions({
+  setMusicStart,
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Wave extends Component {
   static propTypes = {
     // mapStateToProps
-    music: PropTypes.arrayOf(PropTypes.number).isRequired,
+    bars: PropTypes.arrayOf(PropTypes.number).isRequired,
+    start: PropTypes.number.isRequired,
+    duration: PropTypes.number.isRequired,
+
+    // mapDispatchToProps
+    setMusicStart: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -36,17 +57,6 @@ class Wave extends Component {
     this.canvasRef = createRef();
     this.canvasTimer = null;
     this.state = { ...INITIAL_STATE };
-  }
-
-  static getDerivedStateFromProps({ music: { length } }, { duration, width }) {
-    if (length === duration) {
-      return null;
-    }
-
-    return {
-      cursor: (-(length * (BAR_SPACE / 2))) + (width / 2),
-      duration: length,
-    };
   }
 
   componentDidMount() {
@@ -78,17 +88,28 @@ class Wave extends Component {
   handleCanvasMouseMove = ({ clientX, touches = [] }) => {
     const [touch = {}] = touches;
     const spot = clientX || touch.pageX || null;
-    const { music } = this.props;
+    const {
+      bars,
+      start,
+      duration,
+      setMusicStart,
+    } = this.props;
     const { mouseX, width } = this.state;
     if (!spot || !mouseX) {
       return;
     }
-    const min = -((music.length * BAR_SPACE) - (width / 2) - 10);
+    const min = -((bars.length * BAR_SPACE) - (width / 2) - (duration * BAR_SPACE));
     const max = width / 2;
     this.setState(({ cursor }) => ({
       cursor: Math.max(min, Math.min(max, cursor + spot - mouseX)),
       mouseX: spot,
-    }));
+    }), () => {
+      const { cursor } = this.state;
+      const nowStart = Math.floor((-cursor + max) / BAR_SPACE);
+      if (nowStart !== start) {
+        setMusicStart(nowStart);
+      }
+    });
   }
 
   handleCanvasMouseUp = () => {
@@ -99,24 +120,23 @@ class Wave extends Component {
 
   renderCanvas = () => {
     const ctx = this.canvasRef.current.getContext('2d');
-    const { music } = this.props;
+    const { bars, duration } = this.props;
     const {
       width,
       height,
       sinIndex,
       cursor,
-      barCount,
     } = this.state;
+
     ctx.clearRect(0, 0, width, height);
-    if (music.length) {
+    if (bars.length) {
       const maxHeight = height - 50;
       const audioCurrentTime = 0;
-      music.forEach((bar, idx) => {
+      bars.forEach((bar, idx) => {
         const x = idx * BAR_SPACE;
-        const gap = BAR_SPACE / 2 * barCount;
         const center = -cursor + width / 2;
-        if (x >= center - gap && x < center + gap) {
-          if (x / (music.length * BAR_SPACE) < audioCurrentTime / music.length) {
+        if (x >= center && x < center + BAR_SPACE * duration) {
+          if (x / (bars.length * BAR_SPACE) < audioCurrentTime / bars.length) {
             ctx.fillStyle = '#ff5c26';
           } else {
             ctx.fillStyle = '#FFB5AB';
@@ -125,7 +145,8 @@ class Wave extends Component {
           ctx.fillStyle = '#D0D9DD';
         }
         ctx.textBaseline = 'top';
-        ctx.fillRect(x + cursor, (1 - bar) * maxHeight, BAR_WIDTH, bar * maxHeight);
+        const barHeight = Math.max(2, bar * maxHeight);
+        ctx.fillRect(x + cursor, maxHeight - barHeight, BAR_WIDTH, barHeight);
         ctx.fillStyle = '#000000';
         if (idx % 50 === 0) {
           ctx.fillRect(x + cursor + (BAR_WIDTH / 2), maxHeight, SECOND_WIDTH, SECOND_HEIGHT);
@@ -133,7 +154,7 @@ class Wave extends Component {
           ctx.font = '20px Arial';
           ctx.fillText(idx, x + cursor + (BAR_WIDTH / 2), maxHeight + SECOND_HEIGHT + 3);
         // } else {
-        //  ctx.fillRect( music[i].x + cursor, height * 3/5, 1 ,height * 1/5 - 10);
+        //  ctx.fillRect( bars[i].x + cursor, height * 3/5, 1 ,height * 1/5 - 10);
         }
       });
     } else {

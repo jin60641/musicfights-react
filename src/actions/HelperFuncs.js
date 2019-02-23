@@ -8,7 +8,10 @@ const actionTypes = {
   RESET: 'RESET',
 };
 
-const createAsyncAction = (type) => {
+export const createAsyncAction = (type, async = true) => {
+  if (!async) {
+    return createAction(type);
+  }
   const Action = {
     ORIGIN: type,
     isFetching: false,
@@ -19,4 +22,7 @@ const createAsyncAction = (type) => {
   return Action;
 };
 
-export default createAsyncAction;
+export const bindActions = actions => Object.entries(actions).reduce((obj, [key, value]) => ({
+  ...obj,
+  [key]: value.REQUEST || value,
+}), {});

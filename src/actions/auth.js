@@ -1,20 +1,20 @@
 import { from } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
-import createAction from './createAsyncAction';
+import { createAsyncAction } from './HelperFuncs';
 
 import { connectSocket } from './socket';
 import { successToastr, warningToastr } from './toastr';
 
 import api from '../api/auth';
 
-export const login = createAction('LOGIN');
-export const logout = createAction('LOGOUT');
-export const loggedIn = createAction('LOGGEDIN');
-export const join = createAction('JOIN');
-export const verifyMail = createAction('VERIFY_MAIL');
-export const findPw = createAction('FIND_PW');
-export const changePw = createAction('CHANGE_PW');
+export const login = createAsyncAction('LOGIN');
+export const logout = createAsyncAction('LOGOUT');
+export const loggedIn = createAsyncAction('LOGGEDIN');
+export const join = createAsyncAction('JOIN');
+export const verifyMail = createAsyncAction('VERIFY_MAIL');
+export const findPw = createAsyncAction('FIND_PW');
+export const changePw = createAsyncAction('CHANGE_PW');
 
 const loginEpic = action$ => action$.pipe(
   ofType(login.REQUEST),

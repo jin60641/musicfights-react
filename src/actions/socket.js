@@ -1,9 +1,9 @@
 import { mergeMap } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
-import createAction from './createAsyncAction';
+import { createAsyncAction } from './HelperFuncs';
 
-export const connectSocket = createAction('CONNECT_SOCKET');
-export const closeSocket = createAction('CLOSE_SOCKET');
+export const connectSocket = createAsyncAction('CONNECT_SOCKET');
+export const closeSocket = createAsyncAction('CLOSE_SOCKET');
 
 export const fetchCloseSocket = () => closeSocket();
 
