@@ -28,11 +28,13 @@ const mapStateToProps = ({
     bars,
     start,
     duration,
+    current,
   },
 }) => ({
   bars,
   start,
   duration,
+  current,
 });
 
 const mapDispatchToProps = bindActions({
@@ -46,6 +48,7 @@ class Wave extends Component {
     bars: PropTypes.arrayOf(PropTypes.number).isRequired,
     start: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,
+    current: PropTypes.number.isRequired,
 
     // mapDispatchToProps
     setMusicStart: PropTypes.func.isRequired,
@@ -120,7 +123,12 @@ class Wave extends Component {
 
   renderCanvas = () => {
     const ctx = this.canvasRef.current.getContext('2d');
-    const { bars, duration } = this.props;
+    const {
+      start,
+      bars,
+      duration,
+      current,
+    } = this.props;
     const {
       width,
       height,
@@ -131,12 +139,11 @@ class Wave extends Component {
     ctx.clearRect(0, 0, width, height);
     if (bars.length) {
       const maxHeight = height - 50;
-      const audioCurrentTime = 0;
       bars.forEach((bar, idx) => {
         const x = idx * BAR_SPACE;
         const center = -cursor + width / 2;
         if (x >= center && x < center + BAR_SPACE * duration) {
-          if (x / (bars.length * BAR_SPACE) < audioCurrentTime / bars.length) {
+          if (idx < start + current) {
             ctx.fillStyle = '#ff5c26';
           } else {
             ctx.fillStyle = '#FFB5AB';

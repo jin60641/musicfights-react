@@ -8,6 +8,7 @@ import api from '../api/music';
 import { successToastr, warningToastr } from './toastr';
 
 export const setMusicStart = createAsyncAction('SET_MUSIC_START', false);
+export const setMusicCurrent = createAsyncAction('SET_MUSIC_CURRENT', false);
 export const postMusic = createAsyncAction('POST_MUSIC');
 export const postMusicByYoutube = createAsyncAction('POST_MUSIC_BY_YOUTUBE');
 
