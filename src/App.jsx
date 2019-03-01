@@ -5,7 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { loggedIn } from 'actions/auth';
 
 import Toastr from 'components/Toastr';
-import Upload from './containers/Upload';
+import Auth from './containers/Auth';
+import Body from './containers/Body';
 
 
 const mapStateToProps = ({ user }) => ({ user });
@@ -40,11 +41,12 @@ class App extends Component {
     if (!user) {
       return null;
     }
+
     return (
       <Router>
         <>
           <Toastr />
-          <Upload />
+          {user.id ? <Body /> : <Auth />}
         </>
       </Router>
     );

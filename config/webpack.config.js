@@ -107,6 +107,12 @@ module.exports = function(webpackEnv) {
         loader: require.resolve(preProcessor),
         options: {
           sourceMap: isEnvProduction && shouldUseSourceMap,
+          ...(preProcessor === 'sass-loader' ? {
+            data: '@import "styles/index.scss";',
+            includePaths: [
+              path.resolve(paths.appSrc, 'styles'),
+            ],
+          } : {}),
         },
       });
     }
@@ -265,6 +271,7 @@ module.exports = function(webpackEnv) {
         actions: path.resolve(paths.appSrc, 'actions'),
         components: path.resolve(paths.appSrc, 'components'),
         containers: path.resolve(paths.appSrc, 'containers'),
+        styles: path.resolve(paths.appSrc, 'styles'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
