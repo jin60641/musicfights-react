@@ -25,7 +25,8 @@
           "^components",
           "^containers",
           "^actions",
-          "^styles"
+          "^styles",
+          "^utils"
         ]
       }
     ],

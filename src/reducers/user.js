@@ -4,14 +4,21 @@ import {
   logout,
   loggedIn,
 } from 'actions/auth';
+import { saveToken } from 'utils/Token';
 
 const initialState = null;
 
 export default handleActions({
-  [login.SUCCESS]: (state, action) => Object.assign({}, action.payload),
+  [login.SUCCESS]: (state, action) => {
+    const { user, token } = action.payload;
+    saveToken(token);
+    return { ...user };
+  },
 
   [logout.SUCCESS]: () => ({}),
 
-  [loggedIn.SUCCESS]: (state, action) => Object.assign({}, action.payload),
+  [loggedIn.SUCCESS]: (state, action) => ({
+    ...action.payload,
+  }),
   [loggedIn.FAILURE]: () => ({}),
 }, initialState);

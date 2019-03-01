@@ -6,8 +6,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 
-// const Error = lazy(() => import('../Error/Error'));
-const Upload = lazy(() => import('../Upload/Upload'));
+const Upload = lazy(() => import('../Upload'));
 
 const Body = () => (
   <div className='Body'>
@@ -16,7 +15,7 @@ const Body = () => (
         <Route
           exact
           path='/'
-          render={<Upload />}
+          component={Upload}
         />
         <Redirect to='/' />
       </Switch>

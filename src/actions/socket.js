@@ -1,4 +1,4 @@
-import { mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ofType, combineEpics } from 'redux-observable';
 import { createAsyncAction } from './HelperFuncs';
 
@@ -9,7 +9,7 @@ export const fetchCloseSocket = () => closeSocket();
 
 const socketEpic = action$ => action$.pipe(
   ofType(connectSocket.REQUEST),
-  mergeMap(() => connectSocket.SUCCESS()),
+  map(() => connectSocket.SUCCESS()),
 );
 
 export default combineEpics(

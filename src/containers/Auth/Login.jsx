@@ -92,11 +92,11 @@ class Login extends Component {
         </button>
         <div className='auth-text'>
 비밀번호를 잊으셨나요?
-          <Link className='auth-text-link' to='/auth/find'>비밀번호 찾기</Link>
+          <Link className='auth-text-link' to='/find'>비밀번호 찾기</Link>
         </div>
         <div className='auth-text'>
 아직 회원이 아니신가요?
-          <Link className='auth-text-link' to='/auth/signup'>회원가입</Link>
+          <Link className='auth-text-link' to='/signup'>회원가입</Link>
         </div>
         <input type='submit' hidden />
       </form>
