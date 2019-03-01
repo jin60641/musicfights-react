@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { bindActions } from 'actions/HelperFuncs';
-import { join } from 'actions/auth';
+import { signUp } from 'actions/auth';
 import { warningToastr } from 'actions/toastr';
 
 const INPUTS = [{
@@ -29,16 +29,16 @@ const INPUTS = [{
 }];
 
 const mapDispatchToProps = bindActions({
-  join,
+  signUp,
   warningToastr,
 });
 
 @connect(null, mapDispatchToProps)
-class Join extends Component {
+class SingUp extends Component {
   static propTypes = {
     // mapDispatchToProps
     warningToastr: PropTypes.func.isRequired,
-    join: PropTypes.func.isRequired,
+    signUp: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -54,7 +54,7 @@ class Join extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { join, warningToastr } = this.props;
+    const { signUp, warningToastr } = this.props;
     const {
       email,
       name,
@@ -62,20 +62,21 @@ class Join extends Component {
       passwordCheck,
       handle,
     } = this.state;
-    if (email.length === 0) {
+
+    if (!email) {
       warningToastr('이메일을 입력해 주세요.');
-    } else if (email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/g) === undefined) {
+    } else if (!email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/g)) {
       warningToastr('유효하지 않은 이메일입니다.');
-    } else if (name.length === 0) {
+    } else if (!name) {
       warningToastr('이름을 입력해 주세요.');
-    } else if (handle.length === 0) {
+    } else if (!handle) {
       warningToastr('핸들을 입력해 주세요.');
-    } else if (password.length === 0) {
+    } else if (!password) {
       warningToastr('비밀번호를 입력해 주세요.');
     } else if (passwordCheck !== password) {
       warningToastr('비밀번호 확인이 일치하지 않습니다.');
     } else {
-      join({
+      signUp({
         email,
         password,
         name,
@@ -92,7 +93,7 @@ class Join extends Component {
     return (
       <form className='auth-form' onSubmit={this.handleSubmit}>
         {INPUTS.map(INPUT => (
-          <Fragment key={`Join-input-${INPUT.key}`}>
+          <Fragment key={`SingUp-input-${INPUT.key}`}>
             <label
               className='auth-label'
               htmlFor={INPUT.key}
@@ -120,4 +121,4 @@ class Join extends Component {
   }
 }
 
-export default Join;
+export default SingUp;

@@ -1,0 +1,7 @@
+.login-local {
+  margin-bottom: 20px;
+	background-color : rgba($primary,0.9);
+	&:hover {
+		background-color : $primary;
+	}
+}

@@ -10,8 +10,8 @@ import api from '../api/auth';
 
 export const login = createAsyncAction('LOGIN');
 export const logout = createAsyncAction('LOGOUT');
-export const loggedIn = createAsyncAction('LOGGEDIN');
-export const join = createAsyncAction('JOIN');
+export const loggedIn = createAsyncAction('LOGGED_IN');
+export const signUp = createAsyncAction('SIGN_UP');
 export const verifyMail = createAsyncAction('VERIFY_MAIL');
 export const findPw = createAsyncAction('FIND_PW');
 export const changePw = createAsyncAction('CHANGE_PW');
@@ -52,14 +52,14 @@ const loggedInEpic = action$ => action$.pipe(
   ])),
 );
 
-const joinEpic = action$ => action$.pipe(
-  ofType(join.REQUEST),
-  mergeMap(action => from(api.join(action.payload))),
+const signUpEpic = action$ => action$.pipe(
+  ofType(signUp.REQUEST),
+  mergeMap(action => from(api.signUp(action.payload))),
   mergeMap(body => (body.data ? [
-    join.SUCCESS(body.data),
+    signUp.SUCCESS(body.data),
     successToastr(body.message),
   ] : [
-    join.FAILURE(body.message),
+    signUp.FAILURE(body.message),
     warningToastr(body.message),
   ])),
 );
@@ -100,7 +100,7 @@ export default combineEpics(
   loginEpic,
   loggedInEpic,
   logoutEpic,
-  joinEpic,
+  signUpEpic,
   verifyMailEpic,
   findPwEpic,
   changePwEpic,
