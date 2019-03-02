@@ -1,7 +1,8 @@
 import { handleActions } from 'redux-actions';
 import io from 'socket.io-client';
+import { getToken } from 'utils/Token';
 
-const socket = io();
+const socket = io({ query: { token: getToken() } });
 const { onevent } = socket;
 socket.onevent = (packet) => {
   const args = packet.data || [];
